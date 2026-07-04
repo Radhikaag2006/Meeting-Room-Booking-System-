@@ -1,8 +1,18 @@
-from app.core.database import SessionLocal 
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+load_dotenv(PROJECT_ROOT / ".env")
+
+from app.core.database import SessionLocal
 from app.models.user import User, UserRole, UserStatus
 from app.core.security import hash_password
-from dotenv import load_dotenv
-import os
+from app.models.office import Office
 
 db = SessionLocal()
 
@@ -21,13 +31,16 @@ try:
         role = UserRole.SUPER_ADMIN,
         status = UserStatus.ACTIVE,
         office_id = None,
-        must_chnage_password = False
+        must_change_password = False
         ) 
 
         db.add(super_admin)
         db.commit()
+        db.refresh(super_admin)
 
-        print("Super Admin Created successfully")
-
+        print(f"Super Admin created successfully with ID {super_admin.user_id}")
+except Exception as e:
+        db.rollback()
+        print(f"Error: {e}")
 finally:
     db.close()
