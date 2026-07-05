@@ -35,8 +35,9 @@ def create_access_token(data: dict, expires_delta:Optional[timedelta]=None)->str
     return encoded_jwt
 
 # Decode JWT token 
-def dcode_access_token(token:str):
+def decode_access_token(token:str):
     #decode and validate a JWT token
+    # this will return the payload to the function which we will use further for authorisation 
 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms = [ALGORITHM])
