@@ -27,3 +27,15 @@ class OfficeRepository:
     def delete_office(db:Session, office:Office):
         db.delete(office)
         db.commit()
+# update offcie 
+
+    @staticmethod
+    def update_office(db:Session, office : Office):
+        db.commit()
+        db.refresh(office)
+        return office
+    
+    @staticmethod
+    def delete_office(db:Session, office:Office):
+        db.delete(office)
+        db.commit()
