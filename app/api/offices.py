@@ -8,6 +8,7 @@ from app.models.user import User
 
 from app.schemas.office_schema import(OfficeCreate, OfficeResponse)
 from app.services.office_service import OfficeService
+from app.schemas.office_schema import OfficeUpdate
 
 router = APIRouter(prefix = "/offices", tags=["Office Mangement"])
 
@@ -23,6 +24,34 @@ def get_all_offices(db:Session = Depends(get_db), current_user : User = Depends(
 @router.get("/{office_id}", response_model = OfficeResponse)
 def get_office(office_id : int, db:Session = Depends(get_db), current_user : User = Depends(get_current_super_admin)):
     return OfficeService.get_office_by_id(db, office_id)
-    
+
+# upadte office
+@router.put(
+    "/{office_id}",
+    response_model=OfficeResponse
+)
+def update_office(office_id: int,
+    office: OfficeUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_super_admin)
+):
+    return OfficeService.update_office(
+        db,
+        office_id,
+        office
+    )
+
+# delete office 
+@router.delete("/{office_id}")
+def delete_office(
+    office_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_super_admin)
+):
+    return OfficeService.delete_office(
+        db,
+        office_id
+    )
+
 
 
