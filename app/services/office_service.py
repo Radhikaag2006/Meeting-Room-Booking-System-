@@ -1,0 +1,42 @@
+from fastapi import HTTPException , status
+from sqlalchemy.orm import Session 
+
+from app.models.office import Office
+from app.repositories.office_repository import OfficeRepository
+from app.schemas.office_schema import OfficeCreate
+
+class OfficeService:
+
+    @staticmethod 
+    def create_office(db:Session, office_data: OfficeCreate):
+        existing_office = OfficeRepository.get_office_by_name(db,office_data.office_name)
+        if existing_office:
+            raise HTTPException(
+                status_code = status.HTTP_409_CONFLICT, 
+                detail = "Office already exists.")
+        
+        office = Office(
+            office_name = office_data.office_name,
+            address = office_data.address,
+            city = office_data.city,
+            state = office_data.state,
+            country = office_data.country
+
+        )
+
+        return OfficeRepository.create_office(db,office)
+    
+    @staticmethod
+    def get_all_offices(db:Session):
+        return OfficeRepository.get_all_offices(db)
+    
+    @staticmethod
+    def get_office_by_id(db:Session, office_id:int):
+
+        office = OfficeRepository.get_office_by_id(db, office_id)
+
+        if office is None:
+             raise HTTPException(
+                 status_code = status.HTTP_404_NOT_FOUND,
+                 detail = "Office not found.")
+        return office
