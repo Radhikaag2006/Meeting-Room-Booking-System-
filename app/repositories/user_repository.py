@@ -1,37 +1,169 @@
-# user to perform operations with tehdatabse 
-from sqlalchemy.orm import Session 
-from app.models.user import User,UserRole
+# User Repository
+# Performs all database operations related to the users table
+
 from typing import Optional
 
+from sqlalchemy.orm import Session
+
+from app.models.user import User, UserRole
+
+
 class UserRepository:
+
+    # ---------------------------------------------------------
+    # Get User By Email
+    # ---------------------------------------------------------
     @staticmethod
-    def get_user_by_email(db : Session, email:str)-> Optional[User]:
-        # this function will return the user object if the user with the given email exists in the database 
-        return db.query(User).filter(User.email == email).first()
-    
+    def get_user_by_email(
+        db: Session,
+        email: str,
+    ) -> Optional[User]:
+
+        return (
+            db.query(User)
+            .filter(User.email == email)
+            .first()
+        )
+
+    # ---------------------------------------------------------
+    # Get User By ID
+    # ---------------------------------------------------------
     @staticmethod
-    def get_user_by_id(db:Session, user_id : int):
-        # this func will fetch the user by it's PK
-        return db.query(User).filter(User.user_id == user_id).first()
-    
-    @staticmethod 
-    def create_user(db:Session, user:User):
-        # to add a new user to databse 
+    def get_user_by_id(
+        db: Session,
+        user_id: int,
+    ):
+
+        return (
+            db.query(User)
+            .filter(User.user_id == user_id)
+            .first()
+        )
+
+    # ---------------------------------------------------------
+    # Create User
+    # ---------------------------------------------------------
+    @staticmethod
+    def create_user(
+        db: Session,
+        user: User,
+    ):
+
         db.add(user)
         db.commit()
         db.refresh(user)
+
         return user
-    
-    @staticmethod 
-    def email_exists(db:Session, email:str)->bool:
-        return db.query(User).filter(User.email==email).first() is not None
-    
-# This method will check whether there is already any admin in the office
+
+    # ---------------------------------------------------------
+    # Check Email Exists
+    # ---------------------------------------------------------
     @staticmethod
-    def office_has_admin(db:Session, office_id: int)->bool:
-        return (db.query(User).filter(User.office_id == office_id, User.role == UserRole.OFFICE_ADMIN).first() is not None)
-    
-    # defining the get all office admins 
+    def email_exists(
+        db: Session,
+        email: str,
+    ) -> bool:
+
+        return (
+            db.query(User)
+            .filter(User.email == email)
+            .first()
+            is not None
+        )
+
+    # ---------------------------------------------------------
+    # Check Whether Office Already Has Admin
+    # ---------------------------------------------------------
     @staticmethod
-    def get_all_office_admins(db:Session):
-        return (db.query(User).filter(User.role == UserRole.OFFICE_ADMIN).all())
+    def office_has_admin(
+        db: Session,
+        office_id: int,
+    ) -> bool:
+
+        return (
+            db.query(User)
+            .filter(
+                User.office_id == office_id,
+                User.role == UserRole.OFFICE_ADMIN,
+            )
+            .first()
+            is not None
+        )
+
+    # ---------------------------------------------------------
+    # Get All Office Admins
+    # ---------------------------------------------------------
+    @staticmethod
+    def get_all_office_admins(
+        db: Session,
+    ):
+
+        return (
+            db.query(User)
+            .filter(User.role == UserRole.OFFICE_ADMIN)
+            .all()
+        )
+
+    # ---------------------------------------------------------
+    # Get Employees Of An Office
+    # ---------------------------------------------------------
+    @staticmethod
+    def get_employees_by_office(
+        db: Session,
+        office_id: int,
+    ):
+
+        return (
+            db.query(User)
+            .filter(
+                User.role == UserRole.EMPLOYEE,
+                User.office_id == office_id,
+            )
+            .all()
+        )
+
+    # ---------------------------------------------------------
+    # Get Employee By ID
+    # ---------------------------------------------------------
+    @staticmethod
+    def get_employee_by_id(
+        db: Session,
+        user_id: int,
+        office_id: int,
+    ):
+
+        return (
+            db.query(User)
+            .filter(
+                User.user_id == user_id,
+                User.role == UserRole.EMPLOYEE,
+                User.office_id == office_id,
+            )
+            .first()
+        )
+
+    # ---------------------------------------------------------
+    # Update User
+    # ---------------------------------------------------------
+    @staticmethod
+    def update_user(
+        db: Session,
+        user: User,
+    ):
+
+        db.commit()
+        db.refresh(user)
+
+        return user
+
+    # ---------------------------------------------------------
+    # Delete User
+    # ---------------------------------------------------------
+    @staticmethod
+    def delete_user(
+        db: Session,
+        user: User,
+    ):
+
+        db.delete(user)
+        db.commit()
