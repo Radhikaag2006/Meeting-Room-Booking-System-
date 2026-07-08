@@ -1,6 +1,6 @@
 # user to perform operations with tehdatabse 
 from sqlalchemy.orm import Session 
-from app.models.user import User
+from app.models.user import User,UserRole
 from typing import Optional
 
 class UserRepository:
@@ -26,3 +26,12 @@ class UserRepository:
     def email_exists(db:Session, email:str)->bool:
         return db.query(User).filter(User.email==email).first() is not None
     
+# This method will check whether there is already any admin in the office
+    @staticmethod
+    def office_has_admin(db:Session, office_id: int)->bool:
+        return (db.query(User).filter(User.office_id == office_id, User.role == UserRole.OFFICE_ADMIN).first() is not None)
+    
+    # defining the get all office admins 
+    @staticmethod
+    def get_all_office_admins(db:Session):
+        return (db.query(User).filter(User.role == UserRole.OFFICE_ADMIN).all())

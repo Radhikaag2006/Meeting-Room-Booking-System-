@@ -34,4 +34,5 @@ class UserUpdate(BaseModel):
     email : Optional[EmailStr] = None
     role : Optional[UserRole] = None
     status : Optional[UserStatus] = None
+    office_id: Optional[int] = None
     

@@ -70,24 +70,15 @@ async def get_current_office_admin(
                     detail ="Only Office Admin can perform this action.")
     return current_user
 
-# Checking whether some one is scheduler or not 
-async def get_current_scheduler(
-        current_user : User = Depends(get_current_user)
-)->User:
-    
-    if current_user.role != UserRole.SCHEDULER:
-        raise HTTPException(status_code = status.HTTP_403_FORBIDDEN,
-                            detail = "Only Scheduler can perform this action.")
-    return current_user
+# Checking whether someone is employee or not 
+async def get_current_employee(
+    current_user: User = Depends(get_current_user)
+) -> User:
 
-# CHecking whether someone is attendee or not 
-async def get_current_attendee(
-        current_user :User = Depends(get_current_user)
-)->User:
-    
-    if current_user.role != UserRole.ATTENDEE:
+    if current_user.role != UserRole.EMPLOYEE:
         raise HTTPException(
-            status_code = status.HTTP_403_FORBIDDEN, detail="" \
-            "Only Attendee can perform this action."
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only employees can access this resource."
         )
-    return  current_user
+
+    return current_user
