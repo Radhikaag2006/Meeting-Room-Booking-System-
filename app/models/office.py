@@ -18,5 +18,8 @@ class Office(Base):
     updated_at = Column(DateTime,default = datetime.utcnow, onupdate = datetime.utcnow)
 
 
-# creating relaionship vetween office and users 
-users = relationship("Uset",back_populates = "office")
+    # creating relaionship vetween office and users 
+    users = relationship("User",back_populates = "office")
+
+    # one to many relationship with meeting rooms 
+    meeting_rooms = relationship("MeetingRoom",back_populates = "office", cascade = "all, delete-orphan")
