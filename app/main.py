@@ -5,10 +5,12 @@ from app.core.database import engine
 
 from app.models.office import Office
 from app.models.user import User
+from app.models.meeting_room import MeetingRoom
 from app.api.auth import router as auth_router
 from app.api.offices import router as office_router 
 from app.api.office_admin import router as office_admin_router
 from app.api.employee import router as employee_router
+from app.api.meeting_room import router as meeting_room_router
 
 
 
@@ -19,6 +21,7 @@ app.include_router(auth_router)
 app.include_router(office_router)
 app.include_router(office_admin_router)
 app.include_router(employee_router)
+app.include_router(meeting_room_router)
 
 @app.get("/")
 def home():
