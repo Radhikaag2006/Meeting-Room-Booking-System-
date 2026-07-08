@@ -7,6 +7,7 @@ from app.models.office import Office
 from app.models.user import User
 from app.api.auth import router as auth_router
 from app.api.offices import router as office_router 
+from app.api.office_admin import router as office_admin_router
 
 
 app = FastAPI(title = "Meeting Room Booking System", version = "1.0.0")
@@ -14,6 +15,7 @@ app = FastAPI(title = "Meeting Room Booking System", version = "1.0.0")
 Base.metadata.create_all(bind = engine)
 app.include_router(auth_router)
 app.include_router(office_router)
+app.include_router(office_admin_router)
 
 @app.get("/")
 def home():

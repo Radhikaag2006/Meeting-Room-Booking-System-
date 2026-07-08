@@ -12,8 +12,7 @@ from app.core.database import Base
 class UserRole(enum.Enum):
     SUPER_ADMIN = "SUPER_ADMIN"
     OFFICE_ADMIN = "OFFICE_ADMIN"
-    SCHEDULER = "SCHEDULER"
-    ATTENDEE = "ATTENDEE"
+    EMPLOYEE = "EMPLOYEE"
 
 class UserStatus(enum.Enum):
     ACTIVE = "ACTIVE"
@@ -33,7 +32,7 @@ class User(Base):
     role = Column(Enum(UserRole), nullable = False)
     status = Column(Enum(UserStatus), default=UserStatus.ACTIVE)
     created_at = Column(DateTime, default = datetime.utcnow)
-    updated_at = Column(DateTime, default = datetime.utcnow)
+    updated_at = Column(DateTime, default = datetime.utcnow, onupdate = datetime.utcnow)
     must_change_password = Column(Boolean, default = True)  # so that user can change his password later on
 
 

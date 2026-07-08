@@ -39,3 +39,10 @@ class OfficeRepository:
     def delete_office(db:Session, office:Office):
         db.delete(office)
         db.commit()
+
+
+# This function checks whetehr there exists an office already  or not
+    @staticmethod
+    def office_exists(db:Session, office_id: int)->bool:
+        return (db.query(Office).filter(Office.office_id == office_id).first() is not None)
+    
