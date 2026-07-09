@@ -167,3 +167,9 @@ class UserRepository:
 
         db.delete(user)
         db.commit()
+
+    #  this function will be required during the booking 
+    @staticmethod 
+    def get_user_by_ids(db:Session, user_ids: list[int]):
+        return(db.query(User).filter(User.user_id.in_(user_ids)).all())
+
