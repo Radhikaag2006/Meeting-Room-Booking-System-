@@ -24,3 +24,7 @@ class MeetingRoom(Base):
 
     # relationship between offices and rooms 
     office = relationship("Office",back_populates="meeting_rooms")
+
+    # relationship between meeting room and booking 
+    bookings =  relationship("Booking",back_populates = "room")
+    

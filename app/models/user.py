@@ -39,3 +39,9 @@ class User(Base):
 
     # creating many to one relationship between office and users because one office can have many users
     office = relationship("Office", back_populates="users")
+
+    # relationshipbetween the users and the bookings 
+    organized_bookings = relationship("Booking", back_populates = "organizer")
+
+    meeting_attendances = relationship("MeetingAttendee", back_populates = "employee")
+    
