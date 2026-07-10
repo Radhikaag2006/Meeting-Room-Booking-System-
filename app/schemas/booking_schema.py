@@ -33,7 +33,7 @@ class BookingResponse(BaseModel):
     start_time : time
     end_time : time
     status : BookingStatus
-    model_config = ConfigDict(from_attribbutes = True)
+    model_config = ConfigDict(from_attributes = True)
 
 # Meeting attendee response 
 class MeetingAttendeeResponse(BaseModel):

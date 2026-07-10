@@ -22,12 +22,12 @@ class MeetingRoomService:
         
         # Capacity validation
         if room_data.capacity <= 0:
-            raise HTTPException(status_code = status.HTTP_404_BAD_REQUEST,
+            raise HTTPException(status_code = status.HTTP_400_BAD_REQUEST,
                                 detail = "Capacity cannot be negative.")
-        
+
          # Floor validation
         if room_data.floor < 0:
-            raise HTTPException(status_code = status.HTTP_404_BAD_REQUEST,
+            raise HTTPException(status_code = status.HTTP_400_BAD_REQUEST,
                                 detail = "Floor cannot be negative.")
         
         room = MeetingRoom(

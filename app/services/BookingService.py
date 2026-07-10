@@ -70,7 +70,7 @@ class BookingService:
         
 
             if employee.status != UserStatus.ACTIVE:
-                raise  HTTPException(statuc_code = status.HTTP_400_BAD_REQUEST,
+                raise  HTTPException(status_code = status.HTTP_400_BAD_REQUEST,
                                      detail = f"{employee.first_name} is inactive.")
             
             if employee.office_id != current_user.office_id:
