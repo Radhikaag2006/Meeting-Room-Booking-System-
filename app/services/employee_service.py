@@ -57,6 +57,22 @@ class EmployeeService:
         )
 
     # ---------------------------------------------------------
+    # Get Colleagues - employee-facing, own office only, ACTIVE
+    # only, excludes the caller (used by the attendee picker)
+    # ---------------------------------------------------------
+    @staticmethod
+    def get_colleagues(
+        db: Session,
+        current_user: User,
+    ):
+
+        return UserRepository.get_active_colleagues(
+            db,
+            current_user.office_id,
+            current_user.user_id,
+        )
+
+    # ---------------------------------------------------------
     # Get Employee By ID
     # ---------------------------------------------------------
     @staticmethod

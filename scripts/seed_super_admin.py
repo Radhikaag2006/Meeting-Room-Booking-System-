@@ -13,6 +13,9 @@ from app.core.database import SessionLocal
 from app.models.user import User, UserRole, UserStatus
 from app.core.security import hash_password
 from app.models.office import Office
+from app.models import booking
+from app.models.meeting_attendee import MeetingAttendee
+from app.models.meeting_room import MeetingRoom
 
 db = SessionLocal()
 

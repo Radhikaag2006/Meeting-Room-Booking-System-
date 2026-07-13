@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi import Depends
-from app.core.dependencies import get_current_office_admin
+from app.core.dependencies import get_current_office_admin, get_current_employee
 from app.models.user import User
 
 from app.core.database import get_db
@@ -23,7 +23,13 @@ def create_employee(employee_data: EmployeeCreate, db: Session= Depends(get_db),
 def get_all_employees(db:Session= Depends(get_db), current_user : User = Depends(get_current_office_admin)):
     return EmployeeService.get_all_employees(db, current_user)
 
-# GET EMPLOYEE BY ID 
+# GET COLLEAGUES - employee-facing (attendee picker); must be declared
+# before "/{user_id}" so it isn't swallowed by that route
+@router.get("/colleagues", response_model = list[EmployeeResponse])
+def get_colleagues(db:Session= Depends(get_db), current_user : User = Depends(get_current_employee)):
+    return EmployeeService.get_colleagues(db, current_user)
+
+# GET EMPLOYEE BY ID
 @router.get("/{user_id}",response_model = EmployeeResponse)
 def get_employee_by_id(user_id: int, db:Session=Depends(get_db), current_user : User = Depends(get_current_office_admin)):
     return EmployeeService.get_employee_by_id(db, user_id, current_user)

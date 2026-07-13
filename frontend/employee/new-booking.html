@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New Booking — Employee</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233b5fd9'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-size='17' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/base.css" />
+  <link rel="stylesheet" href="/assets/css/layout.css" />
+  <link rel="stylesheet" href="/assets/css/components.css" />
+  <link rel="stylesheet" href="/assets/css/pages/bookings.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar"></aside>
+    <div class="main">
+      <header id="topbar" class="topbar"></header>
+      <div class="page">
+        <div class="page-header"><h1>New Booking</h1></div>
+        <div class="card booking-form" id="form-container">
+          <form id="booking-form" novalidate>
+            <div class="field">
+              <label for="meeting_title">Meeting Title</label>
+              <input type="text" id="meeting_title" name="meeting_title" required />
+              <div class="error-text"></div>
+            </div>
+            <div class="field">
+              <label for="description">Description</label>
+              <textarea id="description" name="description"></textarea>
+            </div>
+            <div class="field">
+              <label for="room_id">Room</label>
+              <select id="room_id" name="room_id" required></select>
+              <div class="error-text"></div>
+            </div>
+            <div class="field">
+              <label for="meeting_date">Date</label>
+              <input type="date" id="meeting_date" name="meeting_date" required />
+              <div class="error-text"></div>
+            </div>
+            <div class="field">
+              <label for="start_time">Start Time</label>
+              <input type="time" id="start_time" name="start_time" required />
+            </div>
+            <div class="field">
+              <label for="end_time">End Time</label>
+              <input type="time" id="end_time" name="end_time" required />
+              <div class="error-text"></div>
+            </div>
+            <div class="field">
+              <label>Attendees</label>
+              <div class="checkbox-list" id="attendees-list"></div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Create Booking</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/assets/js/pages/employee/new-booking.js"></script>
+</body>
+</html>
