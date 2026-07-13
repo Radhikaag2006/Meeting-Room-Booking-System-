@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.meeting_room import MeetingRoom
+from app.models.meeting_room import MeetingRoom, RoomStatus
 
 class MeetingRoomRepository:
 
@@ -22,11 +22,19 @@ class MeetingRoomRepository:
     def get_room_by_name(db:Session, office_id: int, room_name : str):
         return (db.query(MeetingRoom).filter(MeetingRoom.office_id == office_id, MeetingRoom.room_name == room_name).first())
     
-    #get all rooms of an office 
+    #get all rooms of an office
     @staticmethod
     def get_rooms_by_office(db:Session,office_id: int):
         return (db.query(MeetingRoom).filter(MeetingRoom.office_id ==  office_id).all())
-    
+
+    # get active (bookable) rooms of an office - used by the employee-facing room picker
+    @staticmethod
+    def get_active_rooms_by_office(db:Session, office_id: int):
+        return (db.query(MeetingRoom).filter(
+            MeetingRoom.office_id == office_id,
+            MeetingRoom.status == RoomStatus.ACTIVE,
+        ).all())
+
     #Update Room
     @staticmethod
     def update_room(db:Session, room: MeetingRoom):

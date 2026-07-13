@@ -80,6 +80,10 @@ instance/
 # Sphinx documentation
 docs/_build/
 
+# Planning document 
+docs/frontend-plan.html
+docs/frontend-plan.pdf
+
 # PyBuilder
 .pybuilder/
 target/

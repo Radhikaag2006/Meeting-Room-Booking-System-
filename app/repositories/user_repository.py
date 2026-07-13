@@ -5,7 +5,7 @@ from typing import Optional
 
 from sqlalchemy.orm import Session
 
-from app.models.user import User, UserRole
+from app.models.user import User, UserRole, UserStatus
 
 
 class UserRepository:
@@ -168,8 +168,30 @@ class UserRepository:
         db.delete(user)
         db.commit()
 
-    #  this function will be required during the booking 
-    @staticmethod 
+    #  this function will be required during the booking
+    @staticmethod
     def get_user_by_ids(db:Session, user_ids: list[int]):
         return(db.query(User).filter(User.user_id.in_(user_ids)).all())
+
+    # ---------------------------------------------------------
+    # Get Active Colleagues Of An Office (excludes the caller) -
+    # used by the employee-facing attendee picker
+    # ---------------------------------------------------------
+    @staticmethod
+    def get_active_colleagues(
+        db: Session,
+        office_id: int,
+        exclude_user_id: int,
+    ):
+
+        return (
+            db.query(User)
+            .filter(
+                User.role == UserRole.EMPLOYEE,
+                User.office_id == office_id,
+                User.status == UserStatus.ACTIVE,
+                User.user_id != exclude_user_id,
+            )
+            .all()
+        )
 

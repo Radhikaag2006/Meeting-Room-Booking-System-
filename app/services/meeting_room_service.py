@@ -52,7 +52,19 @@ class MeetingRoomService:
             current_user.office_id,
         )
 
-    
+    # Get Available Rooms - employee-facing, own office only, ACTIVE rooms only
+    @staticmethod
+    def get_available_rooms(
+        db: Session,
+        current_user: User,
+    ):
+
+        return MeetingRoomRepository.get_active_rooms_by_office(
+            db,
+            current_user.office_id,
+        )
+
+
     # Get Room By ID
     @staticmethod
     def get_room_by_id(

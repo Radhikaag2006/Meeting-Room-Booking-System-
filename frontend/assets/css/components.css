@@ -1,0 +1,313 @@
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) { background: var(--color-primary-dk); }
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+.btn-secondary:hover:not(:disabled) { background: var(--color-bg); }
+.btn-danger {
+  background: var(--color-danger);
+  color: #fff;
+}
+.btn-danger:hover:not(:disabled) { opacity: 0.9; }
+.btn-icon {
+  padding: 6px;
+  background: transparent;
+  border-color: var(--color-border);
+}
+.btn-block { width: 100%; }
+
+/* Forms */
+.field {
+  margin-bottom: var(--space-3);
+}
+.field label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-dim);
+  margin-bottom: var(--space-1);
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--color-primary);
+}
+.field .error-text {
+  display: none;
+  color: var(--color-danger);
+  font-size: 12px;
+  margin-top: var(--space-1);
+}
+.field.has-error input,
+.field.has-error select,
+.field.has-error textarea {
+  border-color: var(--color-danger);
+}
+.field.has-error .error-text {
+  display: block;
+}
+
+/* Card / surface */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+/* Data table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.data-table th, .data-table td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 13px;
+}
+.data-table th {
+  background: var(--color-bg);
+  color: var(--color-text-dim);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background: var(--color-bg); }
+.data-table .empty-row td {
+  text-align: center;
+  color: var(--color-text-dim);
+  padding: var(--space-5);
+}
+
+/* Below 768px a data-table becomes a stack of labelled-row cards instead of
+   scrolling horizontally - table.js emits data-label="<column label>" on
+   every <td> so this can render it via ::before without page-specific CSS. */
+@media (max-width: 768px) {
+  .data-table thead { display: none; }
+  .data-table, .data-table tbody, .data-table tr, .data-table td {
+    display: block;
+    width: 100%;
+  }
+  .data-table tr {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-3);
+    overflow: hidden;
+  }
+  .data-table tr:last-child { margin-bottom: 0; }
+  .data-table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+    text-align: right;
+  }
+  .data-table td:last-child { border-bottom: none; }
+  .data-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--color-text-dim);
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .data-table td[data-label=""]::before { content: none; }
+  .data-table td[data-label=""] { justify-content: flex-end; }
+  .data-table .empty-row td {
+    display: block;
+    text-align: center;
+  }
+  .data-table .empty-row td::before { content: none; }
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.badge-success { background: #e4f5ee; color: var(--color-success); }
+.badge-danger  { background: #fbe9e7; color: var(--color-danger); }
+.badge-warning { background: #fdf1de; color: var(--color-warning); }
+.badge-neutral { background: var(--color-bg); color: var(--color-text-dim); }
+
+/* Toasts */
+.toast-container {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.toast {
+  min-width: 240px;
+  max-width: 360px;
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  background: var(--color-text);
+  color: #fff;
+  font-size: 13px;
+}
+.toast-success { background: var(--color-success); }
+.toast-error { background: var(--color-danger); }
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 25, 43, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+}
+.modal {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  width: min(420px, 92vw);
+  box-shadow: var(--shadow-md);
+}
+.modal h3 { margin-bottom: var(--space-2); }
+.modal .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+/* Stat cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.stat-card .stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+.stat-card .stat-label {
+  font-size: 12.5px;
+  color: var(--color-text-dim);
+  margin-top: var(--space-1);
+}
+.stat-card a {
+  display: inline-block;
+  margin-top: var(--space-2);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+/* Table toolbar (list page header row: title + create button) */
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: var(--space-3);
+}
+.row-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Simple list rows (e.g. "next up" meetings on the employee dashboard) */
+.card ul li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.card ul li:last-child { border-bottom: none; }
+
+/* Full-page fallback when guard.js can't even reach the server to verify
+   the session (see guard.js) - distinct from a normal empty-state since
+   there's no page chrome (sidebar/topbar) to render it inside yet. */
+.page-error-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+.page-error-shell .empty-state {
+  max-width: 360px;
+}
+
+/* Empty / loading states */
+.empty-state {
+  text-align: center;
+  color: var(--color-text-dim);
+  padding: var(--space-5);
+}
+/* Used standalone (not nested in a .card) by renderErrorState so it reads as
+   a distinct box regardless of which container it's dropped into. */
+.empty-state.is-error {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--color-bg) 25%, #eef0f5 37%, var(--color-bg) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+  border-radius: var(--radius-sm);
+  height: 14px;
+}
+@keyframes skeleton-loading {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
